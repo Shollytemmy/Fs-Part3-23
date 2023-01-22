@@ -1,3 +1,6 @@
+const express = require('express');
+const app = express();
+
 
 let notes = [
   {
@@ -17,17 +20,18 @@ let notes = [
   }
 ]
 
+app.get("/", (request, response) => {
+    response.end("<h1>Hello World and welcome to the server-side Development</h1>")
+})
 
-const http = require('http')
+app.get("/api/notes", (request, response) => {
 
-const app = http.createServer((request, response) => {
-    response.writeHead(200, {"content-type": "application/json"})
+    response.json(notes)
 
-    response.end(JSON.stringify(notes))
 })
 
 const PORT = 5174
 
-app.listen(PORT)
-
-console.log(`The server is listen to the port ${PORT}`)
+app.listen(PORT, () => {
+    console.log(`The server listening on ${PORT}`)
+})
