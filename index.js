@@ -72,16 +72,28 @@ const generateId = () => {
 
 app.post("/api/notes", (req, res) => {
 
-  const maxId = notes.length > 0 
-  ? Math.max(...notes.map((note) => note.id)) : 0
+  // const maxId = notes.length > 0 
+  // ? Math.max(...notes.map((note) => note.id)) : 0
 
 
-  const note = req.body
+  const body = req.body
 
-  note.id = maxId + 1
+  if(!body.content){
+    return res.status(400).json({
+      message: "No content",
+      status: 400
+    })
+  }
+
+  const note = {
+    content: body.content,
+    important: body.important || false,
+    date: new Date(),
+    id: generateId()
+  }
 
   notes = notes.concat(note)
-   res.json(notes)
+  res.json(note)
 
   
 } )
