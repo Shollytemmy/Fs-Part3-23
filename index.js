@@ -30,6 +30,19 @@ app.get("/api/notes", (request, response) => {
 
 })
 
+app.get("/api/notes/:id", (req, res) => {
+
+  let {id} = req.params
+
+  const note = notes.find((note) => note.id === Number(id))
+
+  if(note){
+    res.json(note)
+  } else{
+    res.sendStatus(404)
+  }
+})
+
 const PORT = 5174
 
 app.listen(PORT, () => {
