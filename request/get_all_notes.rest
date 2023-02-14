@@ -1,0 +1,9 @@
+GET http://localhost:5174/api/notes
+###
+POST http://localhost:5174/api/notes/
+Content-Type: application/json
+
+{
+    "content": "Rest Client Testing with the Backend",
+    "important": true
+}

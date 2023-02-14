@@ -21,6 +21,8 @@ let notes = [
   }
 ]
 
+app.use(express.json())
+
 app.get("/", (request, response) => {
     response.end("<h1>Hello World and welcome to the server-side Development</h1>")
 })
@@ -54,10 +56,37 @@ app.delete("/api/notes/:id", (req, res) => {
 
   let {id} = req.params
 
-  const note = notes.filter((note) => note.id !== Number(id))
+   notes = notes.filter((note) => note.id !== Number(id))
 
   res.status(204).end()
 })
+
+const generateId = () => {
+
+  const maxId = notes.length > 0 
+  ? Math.max(...notes.map((note) => note.id)) : 0
+
+  return maxId + 1
+}
+
+
+app.post("/api/notes", (req, res) => {
+
+  const maxId = notes.length > 0 
+  ? Math.max(...notes.map((note) => note.id)) : 0
+
+
+  const note = req.body
+
+  note.id = maxId + 1
+
+  notes = notes.concat(note)
+   res.json(notes)
+
+  
+} )
+
+
 
 const PORT = 5174
 
