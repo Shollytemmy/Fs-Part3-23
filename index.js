@@ -1,3 +1,4 @@
+const { json } = require('express');
 const express = require('express');
 const app = express();
 
@@ -39,8 +40,23 @@ app.get("/api/notes/:id", (req, res) => {
   if(note){
     res.json(note)
   } else{
-    res.sendStatus(404)
+    res.status(404).
+      json({
+        status: 404,
+        message: "Not Found"
+      })
+    
   }
+})
+
+
+app.delete("/api/notes/:id", (req, res) => {
+
+  let {id} = req.params
+
+  const note = notes.filter((note) => note.id !== Number(id))
+
+  res.status(204).end()
 })
 
 const PORT = 5174
