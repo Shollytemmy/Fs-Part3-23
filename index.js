@@ -1,7 +1,7 @@
 
 const express = require('express');
 const app = express();
-
+const cors = require('cors')
 
 let notes = [
   {
@@ -23,7 +23,10 @@ let notes = [
 
 
 
+
 app.use(express.json())
+app.use(cors())
+app.use(express.static('dist'))
 
 
 
@@ -112,7 +115,7 @@ app.use(unknownEndpoint)
 
 
 
-const PORT = 5174
+const PORT = process.env.PORT || 5174
 
 app.listen(PORT, () => {
     console.log(`The server listening on ${PORT}`)
