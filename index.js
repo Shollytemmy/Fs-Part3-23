@@ -1,4 +1,4 @@
-const { json } = require('express');
+
 const express = require('express');
 const app = express();
 
@@ -21,7 +21,12 @@ let notes = [
   }
 ]
 
+
+
 app.use(express.json())
+
+
+
 
 app.get("/", (request, response) => {
     response.end("<h1>Hello World and welcome to the server-side Development</h1>")
@@ -72,10 +77,7 @@ const generateId = () => {
 
 app.post("/api/notes", (req, res) => {
 
-  // const maxId = notes.length > 0 
-  // ? Math.max(...notes.map((note) => note.id)) : 0
-
-
+ 
   const body = req.body
 
   if(!body.content){
@@ -97,6 +99,16 @@ app.post("/api/notes", (req, res) => {
 
   
 } )
+
+const unknownEndpoint = (req, res) => {
+
+  res.status(404).send({
+    error: 'Unknown endpoint'
+  })
+
+}
+
+app.use(unknownEndpoint)
 
 
 
